@@ -1,0 +1,13 @@
+{
+  "name": "busa",
+  "version": "0.0.1",
+  "main": "bus.js",
+  "scripts": {
+    "test": "ava",
+    "start": "node_modules/google-closure-compiler-linux/compiler --generate_exports --export_local_property_definitions --use_types_for_optimization --formatting SINGLE_QUOTES --language_in=ECMASCRIPT5 --language_out=ECMASCRIPT5 --compilation_level ADVANCED --js_output_file=bus.js --js 'src/*.js'"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "google-closure-compiler-linux": "^20181125.0.1"
+  }
+}
