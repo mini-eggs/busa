@@ -1,53 +1,23 @@
-/**
- * @constructor
- */
-function Bus() {
-  /**
-   * @private {*}
-   */
-  this.handlers = {};
-}
-
-/**
- * @param {string} key
- * @param {Function} val
- */
-Bus.prototype["on"] = function(key, val) {
-  if (!this.handlers[key]) {
-    this.handlers[key] = [];
-  }
-
-  this.handlers[key].push(val);
-};
-
-/**
- * @param {string} key
- * @param {Function} val
- */
-Bus.prototype["off"] = function(key, val) {
-  var next = [];
-
-  for (var i = 0; i < this.handlers[key].length; i++) {
-    var f = this.handlers[key][i];
-    if (val !== f) {
-      next.push(f);
-    }
-  }
-
-  this.handlers[key] = next;
-};
-
-/**
- * @param {string} key
- * @param {Object=} props
- */
-Bus.prototype["emit"] = function(key, props) {
-  for (var i = 0; i < this.handlers[key].length; i++) {
-    this.handlers[key][i](props);
-  }
-};
+var handlers = {};
 
 /**
  * @export
  */
-var bus = new Bus();
+var busa = {
+  ["on"]: (key, val) => {
+    if (!handlers[key]) handlers[key] = [];
+    handlers[key].push(val);
+  },
+  ["off"]: (key, val) => {
+    for (var i = 0; i < handlers[key].length; i++) {
+      if (val === handlers[key][i]) {
+        handlers[key].splice(i, 1);
+      }
+    }
+  },
+  ["emit"]: (key, props) => {
+    for (var i = 0; i < handlers[key].length; i++) {
+      handlers[key][i](props);
+    }
+  }
+};

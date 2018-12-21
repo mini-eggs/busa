@@ -90,3 +90,37 @@ test("props", t => {
 
   t.deepEqual(callCount, 210);
 });
+
+test("removing list", t => {
+  let callCount = 0;
+
+  let handler = count => () => (callCount += count);
+  let one = handler(1);
+  let two = handler(2);
+  let three = handler(3);
+
+  bus.on("test-5", one);
+  bus.on("test-5", two);
+  bus.on("test-5", three);
+
+  for (let e = 0; e < 10; e++) {
+    bus.emit("test-5");
+  }
+
+  t.deepEqual(callCount, 60);
+
+  bus.off("test-5", three);
+
+  for (let e = 0; e < 10; e++) {
+    bus.emit("test-5");
+  }
+
+  bus.off("test-5", one);
+  bus.off("test-5", two);
+
+  for (let e = 0; e < 10; e++) {
+    bus.emit("test-5");
+  }
+
+  t.deepEqual(callCount, 90);
+});
