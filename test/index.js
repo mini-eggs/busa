@@ -124,3 +124,8 @@ test("removing list", t => {
 
   t.deepEqual(callCount, 90);
 });
+
+test("don't throw error when no handlers have been connected for an event", t => {
+  bus.emit("test-6");
+  t.deepEqual(void 0, undefined);
+});
